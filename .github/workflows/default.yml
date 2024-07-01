@@ -1,0 +1,44 @@
+name: default
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!release-*'
+      - '!experiment-*'
+  pull_request:
+    branches:
+      - 'main'
+      - 'devel'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup build tools
+        run: | 
+          sudo apt-get update
+          sudo apt-get install -y cmake git build-essential gpg curl lsb-release
+      - name: Install packages from Weston Robot apt-get servers
+        run: |
+          sudo install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL http://deb.westonrobot.net/signing.key | sudo gpg --batch --yes --dearmor -o /etc/apt/keyrings/weston-robot.gpg > /dev/null
+          sudo chmod a+r /etc/apt/keyrings/weston-robot.gpg
+          echo \
+              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/weston-robot.gpg] http://deb.westonrobot.net/$(lsb_release -cs) $(lsb_release -cs) main" | \
+              sudo tee /etc/apt/sources.list.d/weston-robot.list > /dev/null
+          echo \
+              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/weston-robot.gpg] http://deb.westonrobot.net/$(lsb_release -cs) $(lsb_release -cs) next" | \
+              sudo tee -a /etc/apt/sources.list.d/weston-robot.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -y wr-dep-mujoco wr-dep-unitree-sdk2
+      - name: Install packages from apt-get
+        run: |
+          sudo apt-get install -y libyaml-cpp-dev libglfw3-dev libgl1-mesa-dev
+      - name: Build and run the simulation
+        run: |
+          mkdir build && cd build
+          cmake ..
+          make -j
