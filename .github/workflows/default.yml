@@ -14,7 +14,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, ubuntu-22.04 ]
     steps:
       - uses: actions/checkout@v4
       - name: Setup build tools
@@ -34,9 +37,28 @@ jobs:
               sudo tee -a /etc/apt/sources.list.d/weston-robot.list > /dev/null
           sudo apt-get update
           sudo apt-get install -y wr-dep-mujoco wr-dep-unitree-sdk2
-      - name: Install packages from apt-get
+      - name: Install packages from apt-get for unitree module
         run: |
           sudo apt-get install -y libyaml-cpp-dev libglfw3-dev libgl1-mesa-dev
+      - name: Install dependencies for xmotion module
+        run: |
+          sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev \
+           libglfw3-dev libcairo2-dev libtbb-dev libasio-dev libboost-all-dev \
+           libgsl-dev libeigen3-dev libtbb-dev libopencv-dev libyaml-cpp-dev \
+           libncurses-dev libevdev-dev libmodbus-dev
+      - name: Install cyclonedds (xmotion)
+        run: |
+          git clone -b 0.9.1 https://github.com/eclipse-cyclonedds/cyclonedds.git
+           cd cyclonedds && mkdir build && cd build
+           cmake -DBUILD_EXAMPLES=OFF -DBUILD_TESTING=OFF -DENABLE_SHM=NO ..
+           make -j && sudo make install
+      - name: Install iceoryx (xmotion)
+        run: |
+          sudo apt-get install -y libacl1-dev libncurses5-dev pkg-config
+          git clone -b v2.0.3 https://github.com/eclipse-iceoryx/iceoryx.git
+            cd iceoryx 
+            cmake -Bbuild -Hiceoryx_meta -DCMAKE_PREFIX_PATH=$(pwd)/build/dependencies/
+            cmake --build build && sudo cmake --build build --target install
       - name: Build and run the simulation
         run: |
           mkdir build && cd build
