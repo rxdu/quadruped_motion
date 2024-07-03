@@ -554,12 +554,6 @@ int main(int argc, char **argv) {
   }
 #endif
 
-  std::string config_file = "go2_sim.yaml";
-  if (argc > 1) {
-    config_file = argv[1];
-  }
-  std::cout << "Using config file: " << config_file << std::endl;
-
   // print version, check compatibility
   std::printf("MuJoCo version %s\n", mj_versionString());
   if (mjVERSION_HEADER != mj_version()) {
@@ -578,10 +572,12 @@ int main(int argc, char **argv) {
   mjvPerturb pert;
   mjv_defaultPerturb(&pert);
 
-  // simulate object encapsulates the UI
-  auto sim =
-      std::make_unique<mj::Simulate>(std::make_unique<mj::GlfwAdapter>(), &cam,
-                                     &opt, &pert, /* is_passive = */ false);
+  //////////////////////////////////////////////////////////////////////////////
+
+  std::string config_file = "go2_sim.yaml";
+  if (argc > 1) {
+    config_file = argv[1];
+  }
 
   const char *repo_path_str = std::getenv("QD_MOTION_PATH");
   if (repo_path_str == nullptr) {
@@ -597,7 +593,10 @@ int main(int argc, char **argv) {
 
   // Load simulation configuration
   try {
-    YAML::Node yaml_node = YAML::LoadFile(repo_path + "/config/" + config_file);
+    std::string full_config_path = repo_path + "/config/" + config_file;
+    std::cout << "Loading config file: " << full_config_path << std::endl;
+
+    YAML::Node yaml_node = YAML::LoadFile(full_config_path);
 
     config.robot = yaml_node["robot"].as<std::string>();
     config.robot_scene = yaml_node["robot_scene"].as<std::string>();
@@ -614,18 +613,17 @@ int main(int argc, char **argv) {
     std::cerr << "Error loading sim_config.yaml: " << e.what() << std::endl;
     return -1;
   }
+  std::cout << "Configuration loaded successfully" << std::endl;
 
+  //////////////////////////////////////////////////////////////////////////////
+
+  // simulate object encapsulates the UI
+  auto sim =
+      std::make_unique<mj::Simulate>(std::make_unique<mj::GlfwAdapter>(), &cam,
+                                     &opt, &pert, /* is_passive = */ false);
   sim->use_elastic_band_ = config.enable_elastic_band;
 
-  string scene_path =
-      repo_path + "/model/" + config.robot + "/" + config.robot_scene;
-  const char *filename = nullptr;
-  if (argc > 1) {
-    filename = argv[1];
-  } else {
-    filename = scene_path.c_str();
-  }
-
+  // start unitree sdk2 bridge thread
   pthread_t unitree_thread;
   int rc = pthread_create(&unitree_thread, NULL, UnitreeSdk2BridgeThread, NULL);
   if (rc != 0) {
@@ -634,7 +632,11 @@ int main(int argc, char **argv) {
   }
 
   // start physics thread
-  std::thread physicsthreadhandle(&PhysicsThread, sim.get(), filename);
+  string scene_path =
+      repo_path + "/model/" + config.robot + "/" + config.robot_scene;
+  std::thread physicsthreadhandle(&PhysicsThread, sim.get(),
+                                  scene_path.c_str());
+
   // start simulation UI loop (blocking call)
   sim->RenderLoop();
   physicsthreadhandle.join();
