@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(unitree_mujoco)
+project(quadruped_motion)
 
 find_program(CCACHE_PROGRAM ccache)
 
@@ -38,21 +38,4 @@ else()
   message(STATUS "Tests will not be built")
 endif()
 
-## Find packages
-find_package(mujoco REQUIRED)
-find_package(unitree_sdk2 REQUIRED)
-
-FILE(GLOB SIM_SRC
-    src/joystick/joystick.cc
-    src/mujoco/*.cc
-    src/unitree_sdk2_bridge/*.cc)
-add_executable(unitree_mujoco ${SIM_SRC} src/main.cc)
-target_link_libraries(unitree_mujoco PUBLIC
-    pthread
-    unitree_sdk2
-    mujoco::mujoco
-    glfw
-    yaml-cpp)
-
-add_executable(jstest src/joystick/jstest.cc src/joystick/joystick.cc)
-target_link_libraries(jstest pthread)
+add_subdirectory(src)

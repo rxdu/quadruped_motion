@@ -641,7 +641,7 @@ int main(int argc, char **argv)
       &cam, &opt, &pert, /* is_passive = */ false);
 
   // Load simulation configuration
-  YAML::Node yaml_node = YAML::LoadFile("../config.yaml");
+  YAML::Node yaml_node = YAML::LoadFile("../config/sim_config.yaml");
   config.robot = yaml_node["robot"].as<std::string>();
   config.robot_scene = yaml_node["robot_scene"].as<std::string>();
   config.domain_id = yaml_node["domain_id"].as<int>();

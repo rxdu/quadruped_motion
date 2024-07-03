@@ -1,0 +1,3 @@
+[submodule "src/xmotion"]
+	path = src/xmotion
+	url = git@github.com:rxdu/libxmotion.git
