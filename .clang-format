@@ -1,3 +1,6 @@
-# Generated from CLion C/C++ Code Style settings
+---
 BasedOnStyle: Google
-SortIncludes: Never
+
+SortIncludes: false
+SeparateDefinitionBlocks: Always
+EmptyLineBeforeAccessModifier: LogicalBlock
