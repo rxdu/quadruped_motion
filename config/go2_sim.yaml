@@ -1,14 +1,32 @@
-robot: "go2"  # Robot name, "go2", "b2", "b2w", "h1"
-robot_scene: "scene_terrain.xml" # Robot scene 
+dds_domain_id: 1  # Domain id
+network_interface: "lo" # Interface
+is_simulation: True # Simulation mode
 
-domain_id: 1  # Domain id
-interface: "lo" # Interface 
+hid_config:
+  keyboard:
+    enable: True
+    device_name: "/dev/input/event3"
+    keyboard_mappings:
+      passive_mode: "F1"
+      fixed_stand_mode: "F2"
+      free_stand_mode: "F3"
+      trotting_mode: "F4"
+      move_base_mode: "F5"
+  joystick:
+    enable: False
+    device_name: "/dev/input/event22"
+    joystick_mappings:
+      forward: 1
+      backward: 2
+      left: 3
+      right: 4
+      up: 5
+      down: 6
+      roll_left: 7
+      roll_right: 8
+      pitch_up: 9
+      pitch_down: 10
+      yaw_left: 11
+      yaw_right: 12
 
-use_joystick: 0 # Simulate Unitree WirelessController using a gamepad
-joystick_type: "xbox" # support "xbox" and "switch" gamepad layout
-joystick_device: "/dev/input/js0" # Device path
-joystick_bits: 16 # Some game controllers may only have 8-bit accuracy
 
-print_scene_information: 1 # Print link, joint and sensors information of robot
-
-enable_elastic_band: 0 # Virtual spring band, used for lifting h1

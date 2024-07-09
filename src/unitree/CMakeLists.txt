@@ -16,3 +16,5 @@ target_link_libraries(unitree_mujoco PUBLIC
 
 add_executable(jstest joystick/jstest.cc joystick/joystick.cc)
 target_link_libraries(jstest pthread)
+
+add_subdirectory(test)
