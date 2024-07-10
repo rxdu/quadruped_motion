@@ -530,6 +530,7 @@ void *UnitreeSdk2BridgeThread(void *arg) {
 
   pthread_exit(NULL);
 }
+
 //------------------------------------------ main
 //--------------------------------------------------
 
@@ -538,6 +539,7 @@ void *UnitreeSdk2BridgeThread(void *arg) {
 #if defined(__APPLE__) && defined(__AVX__)
 extern void DisplayErrorDialogBox(const char *title, const char *msg);
 static const char *rosetta_error_msg = nullptr;
+
 __attribute__((used, visibility("default"))) extern "C" void _mj_rosettaError(
     const char *msg) {
   rosetta_error_msg = msg;
@@ -593,7 +595,7 @@ int main(int argc, char **argv) {
 
   // Load simulation configuration
   try {
-    std::string full_config_path = repo_path + "/config/" + config_file;
+    std::string full_config_path = repo_path + "/config/mujoco/" + config_file;
     std::cout << "Loading config file: " << full_config_path << std::endl;
 
     YAML::Node yaml_node = YAML::LoadFile(full_config_path);

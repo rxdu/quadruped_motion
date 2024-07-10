@@ -2,9 +2,9 @@ dds_domain_id: 1  # Domain id
 network_interface: "lo" # Interface
 is_simulation: True # Simulation mode
 
-hid_config:
+hid_settings:
   keyboard:
-    enable: True
+    enable: False
     device_name: "/dev/input/event3"
     keyboard_mappings:
       passive_mode: "F1"
@@ -29,4 +29,19 @@ hid_config:
       yaw_left: 11
       yaw_right: 12
 
+control_settings:
+  passive_mode:
+    joint_gains:
+      joint0: { kp: 0.0, kd: 8.0 }
+      joint1: { kp: 0.0, kd: 8.0 }
+      joint2: { kp: 0.0, kd: 8.0 }
+      joint3: { kp: 0.0, kd: 8.0 }
+      joint4: { kp: 0.0, kd: 8.0 }
+      joint5: { kp: 0.0, kd: 8.0 }
+      joint6: { kp: 0.0, kd: 8.0 }
+      joint7: { kp: 0.0, kd: 8.0 }
+      joint8: { kp: 0.0, kd: 8.0 }
+      joint9: { kp: 0.0, kd: 8.0 }
+      joint10: { kp: 0.0, kd: 8.0 }
+      joint11: { kp: 0.0, kd: 8.0 }
 
