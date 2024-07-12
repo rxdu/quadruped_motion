@@ -9,7 +9,7 @@ hid_settings:
     keyboard_mappings:
       passive_mode: "F1"
       fixed_stand_mode: "F2"
-      lying_down_mode: "F3"
+      swing_test_mode: "F3"
       free_stand_mode: "F4"
       trotting_mode: "F5"
       move_base_mode: "F6"
@@ -31,8 +31,21 @@ hid_settings:
       yaw_right: 12
 
 control_settings:
-  passive_mode:
-    joint_gains:
+  gain_sets:
+    zero_gain_set:
+      joint0: { kp: 0.0, kd: 0.0 }
+      joint1: { kp: 0.0, kd: 0.0 }
+      joint2: { kp: 0.0, kd: 0.0 }
+      joint3: { kp: 0.0, kd: 0.0 }
+      joint4: { kp: 0.0, kd: 0.0 }
+      joint5: { kp: 0.0, kd: 0.0 }
+      joint6: { kp: 0.0, kd: 0.0 }
+      joint7: { kp: 0.0, kd: 0.0 }
+      joint8: { kp: 0.0, kd: 0.0 }
+      joint9: { kp: 0.0, kd: 0.0 }
+      joint10: { kp: 0.0, kd: 0.0 }
+      joint11: { kp: 0.0, kd: 0.0 }
+    passive_gain_set:
       joint0: { kp: 0.0, kd: 8.0 }
       joint1: { kp: 0.0, kd: 8.0 }
       joint2: { kp: 0.0, kd: 8.0 }
@@ -45,8 +58,7 @@ control_settings:
       joint9: { kp: 0.0, kd: 8.0 }
       joint10: { kp: 0.0, kd: 8.0 }
       joint11: { kp: 0.0, kd: 8.0 }
-  fixed_stand_mode:
-    joint_gains:
+    stance_gain_set:
       joint0: { kp: 80.0, kd: 3.5 }
       joint1: { kp: 80.0, kd: 3.5 }
       joint2: { kp: 80.0, kd: 3.5 }
@@ -59,11 +71,7 @@ control_settings:
       joint9: { kp: 80.0, kd: 3.5 }
       joint10: { kp: 80.0, kd: 3.5 }
       joint11: { kp: 80.0, kd: 3.5 }
-    q_desired: [ 0.00571868, 0.608813, -1.21763, -0.00571868, 0.608813, -1.21763,
-                 0.00571868, 0.608813, -1.21763, -0.00571868, 0.608813, -1.21763 ]
-    duration_ms: 1200
-  lying_down_mode:
-    joint_gains:
+    lying_gain_set:
       joint0: { kp: 50.0, kd: 3.5 }
       joint1: { kp: 50.0, kd: 3.5 }
       joint2: { kp: 50.0, kd: 3.5 }
@@ -76,6 +84,17 @@ control_settings:
       joint9: { kp: 50.0, kd: 3.5 }
       joint10: { kp: 50.0, kd: 3.5 }
       joint11: { kp: 50.0, kd: 3.5 }
+  passive_mode:
+    default_joint_gains: 'passive_gain_set'
+  fixed_stand_mode:
+    default_joint_gains: 'stance_gain_set'
+    q_desired: [ 0.00571868, 0.608813, -1.21763, -0.00571868, 0.608813, -1.21763,
+                 0.00571868, 0.608813, -1.21763, -0.00571868, 0.608813, -1.21763 ]
+    duration_ms: 1200
+  lying_down_mode:
+    default_joint_gains: 'lying_gain_set'
     q_desired: [ 0.0473455, 1.22187, -2.44375, -0.0473455, 1.22187, -2.44375,
                  0.0473455, 1.22187, -2.44375, -0.0473455, 1.22187, -2.44375 ]
     duration_ms: 1200
+  swing_test_mode:
+    default_joint_gains: 'stance_gain_set'
