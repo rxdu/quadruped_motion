@@ -2,6 +2,7 @@ dds_domain_id: 1  # Domain id
 network_interface: "lo" # Interface
 is_simulation: True # Simulation mode
 
+# Key names: refer to driver/src/keyboard.cpp keyname_to_keycode_map
 hid_settings:
   keyboard:
     enable: True
@@ -13,6 +14,14 @@ hid_settings:
       free_stand_mode: "F4"
       trotting_mode: "F5"
       move_base_mode: "F6"
+      left_stick_up: "W"
+      left_stick_down: "S"
+      left_stick_left: "A"
+      left_stick_right: "D"
+      right_stick_up: "I"
+      right_stick_down: "K"
+      right_stick_left: "J"
+      right_stick_right: "L"
   joystick:
     enable: False
     device_name: "/dev/input/event22"
@@ -98,3 +107,18 @@ control_settings:
     duration_ms: 1200
   swing_test_mode:
     default_joint_gains: 'stance_gain_set'
+    swing_leg_index: 0
+    swing_leg_gains:
+      joint_s_0: { kp: 10.0, kd: 3.5 }
+      joint_s_1: { kp: 10.0, kd: 3.5 }
+      joint_s_2: { kp: 10.0, kd: 3.5 }
+    kp: [ 20.0, 20.0, 50.0 ]
+    kd: [ 5.0, 5.0, 20.0 ]
+    change_limit:
+      x_min: -0.15
+      x_max: 0.1
+      y_min: -0.15
+      y_max: 0.15
+      z_min: -0.05
+      z_max: 0.20
+    move_step: 0.05
