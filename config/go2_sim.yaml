@@ -109,9 +109,9 @@ control_settings:
     default_joint_gains: 'stance_gain_set'
     swing_leg_index: 0
     swing_leg_gains:
-      joint_s_0: { kp: 10.0, kd: 3.5 }
-      joint_s_1: { kp: 10.0, kd: 3.5 }
-      joint_s_2: { kp: 10.0, kd: 3.5 }
+      joint_s_0: { kp: 3.0, kd: 2.0 }
+      joint_s_1: { kp: 3.0, kd: 2.0 }
+      joint_s_2: { kp: 3.0, kd: 2.0 }
     kp: [ 20.0, 20.0, 50.0 ]
     kd: [ 5.0, 5.0, 20.0 ]
     change_limit:
