@@ -122,3 +122,12 @@ control_settings:
       z_min: -0.05
       z_max: 0.20
     move_step: 0.05
+  free_stand_mode:
+    default_joint_gains: 'stance_gain_set'
+    pose_limit:
+      roll: 20.0
+      pitch: 15.0
+      yaw: 20.0
+      height: 0.04
+    angle_step: 2.5
+    height_step: 0.01
