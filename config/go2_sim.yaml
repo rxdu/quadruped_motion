@@ -2,7 +2,7 @@ dds_domain_id: 1  # Domain id
 network_interface: "lo" # Interface
 is_simulation: True # Simulation mode
 
-# Key names: refer to driver/src/keyboard.cpp keyname_to_keycode_map
+# Key names: refer to driver/src/keyboard_mapping.cpp keyname_to_keycode_map
 hid_settings:
   keyboard:
     enable: True
