@@ -10,10 +10,11 @@ hid_settings:
     keyboard_mappings:
       passive_mode: "F1"
       fixed_stand_mode: "F2"
-      swing_test_mode: "F3"
-      free_stand_mode: "F4"
-      trotting_mode: "F5"
-      move_base_mode: "F6"
+      free_stand_mode: "F3"
+      trotting_mode: "F4"
+      swing_test_mode: "F5"
+      balance_test_mode: "F6"
+      move_base_mode: "F9"
       left_stick_up: "W"
       left_stick_down: "S"
       left_stick_left: "A"
@@ -38,6 +39,16 @@ hid_settings:
       pitch_down: 10
       yaw_left: 11
       yaw_right: 12
+
+estimator_settings:
+  expected_dt: 0.002
+  simple_estimator:
+    Q_diag: [ 0.0003, 0.0003, 0.0003,
+              0.0003, 0.0003, 0.0003,
+              0.01, 0.01, 0.01,
+              0.01, 0.01, 0.01,
+              0.01, 0.01, 0.01,
+              0.01, 0.01, 0.01 ]
 
 control_settings:
   gain_sets:
