@@ -142,3 +142,18 @@ control_settings:
       height: 0.04
     angle_step: 2.5
     height_step: 0.01
+  balance_test_mode:
+    default_joint_gains: 'stance_gain_set'
+    position_controller:
+      kp: [ 150.0, 150.0, 150.0 ]
+      kd: [ 25.0, 25.0, 25.0 ]
+    orientation_controller:
+      kp: 200.0
+      kd: [ 30.0, 30.0, 30.0 ]
+    pose_limit:
+      x: 0.05
+      y: 0.05
+      z: 0.04
+      yaw: 20.0
+    move_step: 0.05
+    rotate_step: 2.5
